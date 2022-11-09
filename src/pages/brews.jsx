@@ -4,35 +4,40 @@ import {
   StyleSheet,
   useColorScheme,
   View,
+  Text,
   Button
 } from 'react-native';
 
-import CoffeeLogo from '../assets/coffee.svg';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
-const Brews = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const Brews = ({navigation}) => {
 
   return (
-  <SafeAreaView style={backgroundStyle}>
-  </SafeAreaView>
+  <View style={styles.sectionContainer}>
+    <View style={styles.buttonContainer}>
+        <Text style={styles.button} onPress={() => navigation.navigate('Home') }> + </Text>
+    </View>
+  </View>
   );
 };
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    display: 'flex',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  buttonContainer: {
+    backgroundColor: 'red',
+    width: 100,
+    maxHeight: 100,
+    flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center'
+  },
   button: {
-    width: 60
+    fontSize: 40,
+    textAlign: 'center'
   }
+  
 });
 
 export default Brews;

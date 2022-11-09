@@ -17,9 +17,14 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={{title: 'Home'}} />
+    <NavigationContainer style={{flex: 1}}>
+      <Stack.Navigator style={{flex: 1}}>
+        <Stack.Screen
+          style={{flex: 1}}
+          name="Home"
+          component={Home}
+          options={{title: 'Home'}}
+        />
         <Stack.Screen
           name="Brews"
           component={Brews}

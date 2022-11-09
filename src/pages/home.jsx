@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   useColorScheme,
   View,
@@ -19,7 +18,9 @@ const Home = ({navigation}) => {
 
   return (
   <View sytle={styles.sectionContainer}>
+    <View>
     <CoffeeLogo style={{alignSelf: 'center'}}  width={400} height={400} />
+    </View>
     <View style={styles.button}>
       <Button onPress={() => navigation.navigate('Brews')} title="Añade un nuevo café" color="#FF5678" />
     </View>
@@ -30,8 +31,9 @@ const Home = ({navigation}) => {
 const styles = StyleSheet.create({
   sectionContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems:'center',
+    backgroundColor: "red",
   },
   button: {
     width: 200,
