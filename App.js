@@ -11,18 +11,19 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/pages/home';
+import Brews from './src/pages/brews';
 
 const Stack = createNativeStackNavigator();
-
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} options={{title: 'Home'}} />
         <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{title: 'Welcome'}}
+          name="Brews"
+          component={Brews}
+          options={{title: 'Brews'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

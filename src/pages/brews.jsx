@@ -10,7 +10,7 @@ import {
 import CoffeeLogo from '../assets/coffee.svg';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-const Home = () => {
+const Brews = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default Brews;
