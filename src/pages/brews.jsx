@@ -19,14 +19,6 @@ const Brews = () => {
 
   return (
   <SafeAreaView style={backgroundStyle}>
-    <View sytle={styles.sectionContainer}>
-    <CoffeeLogo width={400} height={400} />
-    <Button
-      style={styles.button}
-      title="Añade un nuevo café"
-      color="#FF5678"
-    />
-    </View>
   </SafeAreaView>
   );
 };
