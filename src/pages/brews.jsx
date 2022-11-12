@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { DocumentDirectoryPath, writeFile } from 'react-native-fs';
+import { DocumentDirectoryPath } from 'react-native-fs';
 
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 
@@ -80,11 +80,14 @@ const Brews = ({navigation}) => {
         </View>
       )}
       {photos && photos.length > 0 && (
-        photos.map((photo, index) => (
+        <View style={{width: '50%', height: '50%'}}>
+        {photos.map((photo, index) => (
           <View key={index}>
-            <Image style={{width: '100px', height: '100px'}} source={{uri: 'file://' + DocumentDirectoryPath + photo.path}} />
+            {console.log('file://' + DocumentDirectoryPath + photo.path)}
+             <Image style={{maxWidth: 10, maxHeight: 20}} source={{uri: 'file://' + DocumentDirectoryPath + photo.path}} /> 
           </View>
-        ))
+        ))}
+        </View>
       )}
     </View>
   );
