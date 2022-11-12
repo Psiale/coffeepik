@@ -10,7 +10,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.coffeepik.newarchitecture.MainApplicationReactNativeHost;
+import com.facebook.react.shell.MainReactPackage;
 import java.lang.reflect.InvocationTargetException;
+import com.rnfs.RNFSPackage; // <------- add package
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
