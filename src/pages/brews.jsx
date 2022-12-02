@@ -9,13 +9,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { DocumentDirectoryPath } from 'react-native-fs';
+import {DocumentDirectoryPath} from 'react-native-fs';
 
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 
 const Brews = ({navigation}) => {
   const [cameraPermission, setCameraPermission] = useState('hello');
   const [showCamera, setShowCamera] = useState(false);
+  const [fullImage, setFullImage] = useState(null);
   const [photos, setPhotos] = useState([]);
   const devices = useCameraDevices();
   const device = devices.back;
@@ -39,15 +40,19 @@ const Brews = ({navigation}) => {
     );
   }, []);
 
+  const onItemClick = index => {
+    console.log('index', index);
+    setFullImage(photos[index]);
+    console.log('fullImage', fullImage);
+  };
+
   const onPressButton = async () => {
-    console.log(cameraRef.current);
-    console.log(123);
     const photo = await cameraRef.current.takePhoto({
       flash: 'off',
       qualityPrioritization: 'speed',
     });
 
-    console.log(photo);
+    setFullImage(photo);
 
     setPhotos([...photos, photo]);
 
@@ -56,68 +61,125 @@ const Brews = ({navigation}) => {
   };
 
   return (
-    <View style={styles.sectionContainer}>
-      {cameraPermission === 'authorized' &&
-      device !== undefined &&
-      showCamera ? (
-        <>
-          <Camera
-            device={device}
-            style={{flex: 1, width: '100%'}}
-            isActive={showCamera}
-            photo={true}
-            ref={cameraRef}
-          />
+    <>
+      <View style={styles.sectionContainer}>
+        {cameraPermission === 'authorized' &&
+        device !== undefined &&
+        showCamera ? (
+          <>
+            <Camera
+              device={device}
+              style={{flex: showCamera ? 8 : 1 , width: '100%', position: 'relative'}}
+              isActive={showCamera}
+              photo={true}
+              ref={cameraRef}
+            />
+            <View style={styles.buttonCameraContainer}>
+              <TouchableOpacity
+                style={styles.camButton}
+                onPress={onPressButton}>
+              </TouchableOpacity>
+            </View>
+          </>
+        ) : (
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.camButton} onPress={onPressButton}>
-              <Text>Click me</Text>
-            </TouchableOpacity>
+            <Text style={styles.button} onPress={() => useCamera()}> + </Text>
           </View>
-        </>
-      ) : (
-        <View style={styles.buttonContainer}>
-          <Text style={styles.button} onPress={() => useCamera()}></Text>
-        </View>
-      )}
-      {photos && photos.length > 0 && (
-        <View style={{width: '50%', height: '50%'}}>
-        {photos.map((photo, index) => (
-          <View key={index}>
-            {console.log('file://' + DocumentDirectoryPath + photo.path)}
-             <Image style={{maxWidth: 10, maxHeight: 20}} source={{uri: 'file://' + DocumentDirectoryPath + photo.path}} /> 
+        )}
+      </View>
+      <View style={{ flex: 8, width: '100%', height: '100%', display: showCamera ? 'none' : 'flex', flexDirection: 'row'}}>
+        {photos && photos.length > 0 && (
+          <View style={styles.photoContainer}>
+            {photos.map((photo, index) => (
+              <TouchableOpacity key={index} onPress={() => onItemClick(index)}>
+                <View style={styles.container}>
+                  <Image
+                    style={StyleSheet.absoluteFill}
+                    source={{uri: `file://${photo.path}`}}
+                  />
+                </View>
+              </TouchableOpacity>
+            ))}
           </View>
-        ))}
-        </View>
-      )}
-    </View>
+        )}
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    borderRadius: 10,
+    width: 100,
+    height: 100,
+    marginRight: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'green',
+  },
   sectionContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  galeryContainer: {
+    flex: 8,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    borderColor: 'blue',
+    borderStyle: 'solid',
+    flexDirection: 'row',
+    borderWidth: 1,
+  },
+  photoContainer: {
+    width: '100%',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    height: '100%',
+    flex: 1,
+    flexWrap: 'wrap',
+    display: 'flex',
+    flexDirection: 'row',
+    
   },
   buttonContainer: {
-    backgroundColor: 'red',
     width: 100,
-    maxHeight: 100,
-    flex: 1,
-    alignContent: 'center',
+    flex: 2,
     justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 100,
+  },
+
+  buttonCameraContainer: {
+    width: 100,
+    flex: 2,
+    position: 'absolute',
+    bottom: 0,
+    left: '50%',
+    transform: [{translateX: -50}, {translateY: -50}],
   },
   button: {
     fontSize: 40,
+    color: 'black',
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderWidth: 1,
     textAlign: 'center',
   },
   camButton: {
-    backgroundColor: 'red',
+    backgroundColor: 'purple',
     width: 100,
-    height: 100,
-    flex: 1,
-    alignContent: 'center',
+    display: 'flex',
+    borderRadius: 50,
     justifyContent: 'center',
+    alignItems: 'center',
+    height: 100,
+    fontSize: 100,
+    top: 0,
+    flex: 1,
   },
 });
 
