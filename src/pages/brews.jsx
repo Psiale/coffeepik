@@ -17,14 +17,11 @@ const Brews = ({navigation}) => {
   const [cameraPermission, setCameraPermission] = useState('hello');
   const [showCamera, setShowCamera] = useState(false);
   const [fullImage, setFullImage] = useState(null);
+  const [showFullImage, setShowFullImage] = useState(false);
   const [photos, setPhotos] = useState([]);
   const devices = useCameraDevices();
   const device = devices.back;
   const cameraRef = useRef(null);
-
-  const showToast = message => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
-  };
 
   const useCamera = async () => {
     if (cameraPermission === 'denied') {
@@ -41,9 +38,9 @@ const Brews = ({navigation}) => {
   }, []);
 
   const onItemClick = index => {
-    console.log('index', index);
     setFullImage(photos[index]);
-    console.log('fullImage', fullImage);
+    setShowFullImage(true);
+
   };
 
   const onPressButton = async () => {
@@ -51,8 +48,6 @@ const Brews = ({navigation}) => {
       flash: 'off',
       qualityPrioritization: 'speed',
     });
-
-    setFullImage(photo);
 
     setPhotos([...photos, photo]);
 
@@ -103,6 +98,14 @@ const Brews = ({navigation}) => {
           </View>
         )}
       </View>
+      { fullImage !== null ?  (
+        <View style={styles.fullImageContainer}>
+          <Image
+            style={StyleSheet.absoluteFill}
+            source={{uri: `file://${fullImage.path}`}}
+          />
+        </View>
+      ): null}
     </>
   );
 };
