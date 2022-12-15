@@ -12,6 +12,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './src/pages/home';
 import Brews from './src/pages/brews';
+import Detail from './src/pages/detail';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ const App = () => {
           component={Brews}
           options={{title: 'Brews'}}
         />
+        <Stack.Screen
+          name="Detail"
+          component={Detail}
+          options={{title: 'Detail'}}
+        />        
       </Stack.Navigator>
     </NavigationContainer>
   );

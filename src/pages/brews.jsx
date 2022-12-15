@@ -1,23 +1,18 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   Image,
   Text,
-  ToastAndroid,
   TouchableOpacity,
 } from 'react-native';
 
-import {DocumentDirectoryPath} from 'react-native-fs';
 
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 
 const Brews = ({navigation}) => {
   const [cameraPermission, setCameraPermission] = useState('hello');
   const [showCamera, setShowCamera] = useState(false);
-  const [fullImage, setFullImage] = useState(null);
-  const [showFullImage, setShowFullImage] = useState(false);
   const [photos, setPhotos] = useState([]);
   const devices = useCameraDevices();
   const device = devices.back;
@@ -38,8 +33,7 @@ const Brews = ({navigation}) => {
   }, []);
 
   const onItemClick = index => {
-    setFullImage(photos[index]);
-    setShowFullImage(true);
+    navigation.navigate('Detail', { item: photos[index].path})
 
   };
 
@@ -91,6 +85,7 @@ const Brews = ({navigation}) => {
                   <Image
                     style={StyleSheet.absoluteFill}
                     source={{uri: `file://${photo.path}`}}
+                    resizeMode= 'cover'
                   />
                 </View>
               </TouchableOpacity>
@@ -98,14 +93,6 @@ const Brews = ({navigation}) => {
           </View>
         )}
       </View>
-      { fullImage !== null ?  (
-        <View style={styles.fullImageContainer}>
-          <Image
-            style={StyleSheet.absoluteFill}
-            source={{uri: `file://${fullImage.path}`}}
-          />
-        </View>
-      ): null}
     </>
   );
 };
